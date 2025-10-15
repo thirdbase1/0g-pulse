@@ -5,8 +5,7 @@
 // --- Network Configuration ---
 export const RPC_URL =
   process.env.NEXT_PUBLIC_RPC_URL || "https://evmrpc-testnet.0g.ai";
-export const CHAIN_ID =
-  process.env.NEXT_PUBLIC_CHAIN_ID || "16602";
+export const CHAIN_ID = process.env.NEXT_PUBLIC_CHAIN_ID || "16602";
 export const CHAIN_NAME =
   process.env.NEXT_PUBLIC_CHAIN_NAME || "0G-Testnet-Galileo";
 export const RPC_ENDPOINT = RPC_URL;
@@ -17,7 +16,10 @@ export const EXPLORER_URL =
 
 // --- Token Configuration ---
 export const NATIVE_TOKEN = "0G";
-export const SPENDABLE_TOKEN_ADDRESS = "0x0000000000000000000000000000000000000000"; // native coin
+// Compatibility alias for old code that imported `NATIVE_FOGO`
+export const NATIVE_FOGO = NATIVE_TOKEN;
+
+export const SPENDABLE_TOKEN_ADDRESS = NATIVE_TOKEN; // native coin placeholder
 
 // --- Top EVM Token Addresses to Track (with metadata placeholders) ---
 export const TOP_CA_TOKEN_ADDRESSES = [
@@ -29,7 +31,6 @@ export const TOP_CA_TOKEN_ADDRESSES = [
 
 export const TOP_CA_TOKENS = TOP_CA_TOKEN_ADDRESSES.map((address) => ({
   address,
-  // Placeholder values (metadata fetched dynamically later)
   symbol: `${address.slice(0, 6)}...${address.slice(-4)}`,
   name: "Loading...",
   decimals: 18,
@@ -43,10 +44,10 @@ export const FREQUENT_RECIPIENT_THRESHOLD = 10;
 
 // --- Rank Thresholds ---
 export const RANK_THRESHOLDS = {
-  SPARK: 0, // Top 1
-  FLAME: 1, // Top 2-10
-  EMBER: 10, // Top 11-50
-  OG: 50, // 50+
+  SPARK: 0,
+  FLAME: 1,
+  EMBER: 10,
+  OG: 50,
   BLAZE: 100,
   WILDFIRE: 500,
 };
