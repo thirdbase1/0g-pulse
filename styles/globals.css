@@ -2,24 +2,14 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 0G Pulse theme variables - enhanced purple palette */
-:root {
-  --bg-gradient: linear-gradient(180deg, #e0c3fc 0%, #8ec5fc 40%, #ffffff 100%);
-  --primary: #9b5de5;   /* vibrant purple */
-  --accent: #f15bb5;    /* pinkish accent */
-  --deep: #6a0dad;      /* deep purple for highlights */
-  --text: #1b0d2c;      /* dark text */
-}
-
+/* Apply gradient and text color globally */
 html, body, #root, #__next {
-  height: 100%;
-  background: var(--bg-gradient);
-  color: var(--text);
+  @apply h-full bg-0g-gradient text-text;
 }
 
 /* Buttons */
 .button-primary {
-  @apply bg-[var(--primary)] text-white font-semibold py-2 px-4 rounded-2xl shadow-md hover:bg-[var(--deep)] transition-colors duration-200;
+  @apply bg-primary text-white font-semibold py-2 px-4 rounded-2xl shadow-md hover:bg-deep transition-colors duration-200;
 }
 
 /* Cards */
