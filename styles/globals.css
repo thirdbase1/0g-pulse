@@ -1,7 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 /* 0G Pulse theme variables */
 :root{
   --bg-gradient: linear-gradient(180deg, #f3edff 0%, #e8e0ff 40%, #ffffff 100%);
