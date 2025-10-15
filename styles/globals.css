@@ -1,24 +1,28 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-/* 0G Pulse theme variables */
-:root{
-  --bg-gradient: linear-gradient(180deg, #f3edff 0%, #e8e0ff 40%, #ffffff 100%);
-  --primary: #a06bff;
-  --accent: #cdb3ff;
-  --deep: #6a3dff;
-  --text: #1b0d2c;
+
+/* 0G Pulse theme variables - enhanced purple palette */
+:root {
+  --bg-gradient: linear-gradient(180deg, #e0c3fc 0%, #8ec5fc 40%, #ffffff 100%);
+  --primary: #9b5de5;   /* vibrant purple */
+  --accent: #f15bb5;    /* pinkish accent */
+  --deep: #6a0dad;      /* deep purple for highlights */
+  --text: #1b0d2c;      /* dark text */
 }
 
-html,body,#root,#__next {
+html, body, #root, #__next {
   height: 100%;
   background: var(--bg-gradient);
   color: var(--text);
 }
 
+/* Buttons */
 .button-primary {
-  @apply bg-0g-purple text-white font-semibold py-2 px-4 rounded-2xl shadow-md;
+  @apply bg-[var(--primary)] text-white font-semibold py-2 px-4 rounded-2xl shadow-md hover:bg-[var(--deep)] transition-colors duration-200;
 }
+
+/* Cards */
 .card {
-  @apply bg-white/80 rounded-2xl p-4 shadow-sm border border-white/60;
+  @apply bg-white/80 rounded-2xl p-4 shadow-md border border-white/60 backdrop-blur-sm;
 }
