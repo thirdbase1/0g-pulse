@@ -3,8 +3,7 @@ export const RPC_URL = "https://evmrpc-testnet.0g.ai"
 export const RPC_ENDPOINT = RPC_URL
 
 // Explorer URLs
-export const export const EXPLORER_URL = "https://chainscan-galileo.0g.ai"
-
+export const EXPLORER_URL = "https://chainscan-galileo.0g.ai"
 // Token Addresses
 export const NATIVE_TOKEN = "0G"
 
