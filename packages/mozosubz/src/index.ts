@@ -7,6 +7,7 @@
 
 export type MozoSubzConfig = {
   apiKey: string;
+  baseUrl?: string; // Optional custom base URL for testing
   sandbox?: boolean;
   debug?: boolean;
   concurrency?: number; // Max parallel requests for bulk operations
@@ -65,7 +66,7 @@ export type BulkResult = {
 };
 
 export class MozoSubz {
-  private readonly baseUrl = 'https://gsubz.com/api';
+  private readonly baseUrl: string;
   private readonly config: MozoSubzConfig;
   private readonly webhookSecret?: string;
   private planCache: Map<string, { plans: DataPlan[]; timestamp: number }> = new Map();
@@ -80,6 +81,8 @@ export class MozoSubz {
       lowBalanceThreshold: 500,
       ...config,
     };
+
+    this.baseUrl = this.config.baseUrl || 'https://gsubz.com/api';
 
     if (!this.config.apiKey && !this.config.sandbox) {
       throw new Error('MozoSubz: API Key is required for live mode.');
