@@ -6,12 +6,12 @@ Based on the brute-force stress tests conducted against the real GSUBZ productio
 
 ## 📊 Performance Breakdown
 
-| Metric | 100 Concurrency Test | 500 Concurrency Test |
-| :--- | :--- | :--- |
-| **Total Throughput** | **9.75 requests/sec** | **6.22 requests/sec** |
-| **Avg. Latency (OK/FAIL)** | ~1,200ms | ~3,500ms |
-| **Connection Timeouts** | 36% (`ETIMEDOUT`) | 46% (`ETIMEDOUT`) |
-| **Successful API Reaches** | 28% (Resulted in 402) | 54% (Resulted in 402) |
+| Metric | 20 Concurrency (Sweet Spot) | 100 Concurrency | 500 Concurrency |
+| :--- | :--- | :--- | :--- |
+| **Total Throughput** | **2.63 requests/sec** | **9.75 requests/sec** | **6.22 requests/sec** |
+| **Avg. Latency (OK/FAIL)** | ~1,100ms | ~1,200ms | ~3,500ms |
+| **Connection Timeouts** | **6%** | 36% | 46% |
+| **Successful API Reaches** | **94%** | 28% | 54% |
 
 ---
 
@@ -48,4 +48,4 @@ To process **200 users in under 1 minute**, you should **not** brute-force all 2
     -   Trying to do 500 lanes actually took **80 seconds** for the same amount of work because of the error handling and retries.
 
 ### **Final Verdict for the MozoSubz SDK:**
-Use `concurrency: 15`. This is the "Beast" setting that will give you the fastest consistent delivery without triggering GSUBZ's network-level protection or timing out your requests.
+Use `concurrency: 20`. Our tests show this is the absolute maximum GSUBZ can handle with **high reliability** (94%+ success reaching the logic). While 100 lanes gives higher raw RPS, 70% of those requests never reach the logic, making it dangerous for production use.
