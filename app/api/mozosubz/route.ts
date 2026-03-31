@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { MozoSubz } from '@/lib/mozosubz';
+import { MozoSubz } from '@/packages/mozosubz/src/index';
 
 // Initialize the Beast SDK
 // In a real app, you would use process.env.MOZOSUBZ_API_KEY

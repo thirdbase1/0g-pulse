@@ -1,4 +1,4 @@
-import { MozoSubz, type BulkOrder } from '../lib/mozosubz.ts';
+import { MozoSubz, type BulkOrder } from '../packages/mozosubz/src/index.ts';
 
 async function runTest() {
   console.log('🚀 Starting MozoSubz BEAST SDK Test (Sandbox Mode)');
@@ -35,13 +35,13 @@ async function runTest() {
 
     // 4. Test Data Purchase with Price Audit
     console.log('\n--- Testing Data Purchase (Price Audit Pass) ---');
-    const dataRes = await sdk.buyData('08140558898', 'mock-1', 'mtn_sme', 150);
+    const dataRes = await sdk.buyData('08140558898', 'mock-1', 'mtn_sme', { expectedPrice: 150 });
     console.log(`Status: ${dataRes.status}`);
 
     // 5. Test Price Audit Failure
     console.log('\n--- Testing Data Purchase (Price Audit Fail) ---');
     try {
-      await sdk.buyData('08140558898', 'mock-1', 'mtn_sme', 50);
+      await sdk.buyData('08140558898', 'mock-1', 'mtn_sme', { expectedPrice: 50 });
     } catch (e: any) {
       console.log(`Caught expected error: ${e.message}`);
     }

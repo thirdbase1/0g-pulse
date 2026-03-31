@@ -1,0 +1,28 @@
+{
+  "name": "mozosubz",
+  "version": "1.0.0",
+  "description": "The 'Beast' VTU Integration for GSUBZ.com - Features: Sandbox Mode, Ultra-Speed Bulk Engine, Auto-Security, Smart Caching, and Automatic Margins.",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gsubz",
+    "vtu",
+    "data",
+    "airtime",
+    "nigeria",
+    "api",
+    "sdk",
+    "bulk",
+    "nextjs",
+    "termux"
+  ],
+  "author": "Jules",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.0.0"
+  }
+}
