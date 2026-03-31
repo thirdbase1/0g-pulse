@@ -29,10 +29,10 @@ graph TD
     end
 
     subgraph "Bulk Order Console"
-        D1[CSV Upload / Manual Entry]
-        D2[Parallelism Lane Slider]
-        D3[Live Progress Feed]
-        D4[Failure Export (Retry List)]
+        D1["CSV Upload / Manual Entry"]
+        D2["Parallelism Lane Slider"]
+        D3["Live Progress Feed"]
+        D4["Failure Export (Retry List)"]
     end
 
     subgraph "Transaction Logs"
