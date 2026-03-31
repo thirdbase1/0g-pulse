@@ -50,6 +50,38 @@ async function runMozoSubzStressCli() {
     amount: (100 + (i % 10) * 100).toString()
   }));
 
+  // Confirm API Key and Balance first
+  try {
+    const balanceUrl = new URL(`${BASE_URL}/balance/`);
+    const balanceData = `api=${API_KEY}`;
+    const balanceOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'api': `Bearer ${API_KEY}`
+      }
+    };
+
+    await new Promise((resolve) => {
+      const protocol = balanceUrl.protocol === 'https:' ? https : http;
+      const req = protocol.request(balanceUrl, balanceOptions, (res) => {
+        let body = '';
+        res.on('data', d => body += d);
+        res.on('end', () => {
+          console.log(`${COLORS.green}✅ API Connection Verified.${COLORS.reset}`);
+          console.log(`Current Balance: ${body}`);
+          resolve();
+        });
+      });
+      req.on('error', (e) => {
+        console.log(`${COLORS.red}⚠️ Warning: Could not verify balance: ${e.message}${COLORS.reset}`);
+        resolve();
+      });
+      req.write(balanceData);
+      req.end();
+    });
+  } catch (e) {}
+
   console.log(`🚀 BRUTE-FORCING ${TOTAL_REQUESTS} CONCURRENT REQUESTS...`);
   console.log(`\n${COLORS.yellow}LIVE TICKER:${COLORS.reset}`);
   console.log('ID | STATUS | LATENCY | AMOUNT | ERROR');
@@ -74,7 +106,7 @@ async function runMozoSubzStressCli() {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': Buffer.byteLength(postData),
-          'Authorization': `Bearer ${API_KEY}`
+          'api': `Bearer ${API_KEY}`
         }
       };
 
@@ -83,6 +115,14 @@ async function runMozoSubzStressCli() {
         let responseBody = '';
         res.on('data', chunk => responseBody += chunk);
         res.on('end', () => {
+          if (res.statusCode !== 200) {
+            const latency = Date.now() - reqStart;
+            failCount++;
+            const errorMsg = `HTTP_${res.statusCode}`;
+            errorTypes[errorMsg] = (errorTypes[errorMsg] || 0) + 1;
+            console.log(`${COLORS.red}#${order.id.toString().padStart(3, '0')} | FAIL   | ${latency}ms | ₦${order.amount} | ${errorMsg}${COLORS.reset}`);
+            return resolve();
+          }
           const latency = Date.now() - reqStart;
           let result;
           try {
@@ -107,8 +147,9 @@ async function runMozoSubzStressCli() {
       req.on('error', (err) => {
         const latency = Date.now() - reqStart;
         failCount++;
-        errorTypes[err.message] = (errorTypes[err.message] || 0) + 1;
-        console.log(`${COLORS.red}#${order.id.toString().padStart(3, '0')} | ERROR  | ${latency}ms | ₦${order.amount} | ${err.message}${COLORS.reset}`);
+        const errorMsg = err.code || err.message || 'SOCKET_ERROR';
+        errorTypes[errorMsg] = (errorTypes[errorMsg] || 0) + 1;
+        console.log(`${COLORS.red}#${order.id.toString().padStart(3, '0')} | ERROR  | ${latency}ms | ₦${order.amount} | ${errorMsg}${COLORS.reset}`);
         resolve();
       });
 
