@@ -1,0 +1,124 @@
+[35m🦁 MOZOSUBZ STRESS CLI (SMART EDITION) 🦁[0m
+[36m-----------------------------------[0m
+Target: https://gsubz.com/api (Airtime Only)
+Phone:  09056486486
+Config: Initial 100 lanes, 100 total requests
+[36m-----------------------------------[0m
+[32m✅ API Verified. Balance: ₦23.369361499621[0m
+🚀 BRUTE-FORCING 100 REQUESTS (Adaptive Concurrency enabled)...
+
+[33mLIVE TICKER:[0m
+ID | STATUS | LATENCY | AMOUNT | ERROR
+---|--------|---------|--------|-------
+[31m#065 | ERROR  | 590ms | ₦500 | ETIMEDOUT[0m
+[31m#066 | ERROR  | 590ms | ₦600 | ETIMEDOUT[0m
+[31m#067 | ERROR  | 590ms | ₦700 | ETIMEDOUT[0m
+[31m#068 | ERROR  | 589ms | ₦800 | ETIMEDOUT[0m
+[31m#069 | ERROR  | 589ms | ₦900 | ETIMEDOUT[0m
+[31m#070 | ERROR  | 589ms | ₦1000 | ETIMEDOUT[0m
+[31m#071 | ERROR  | 589ms | ₦100 | ETIMEDOUT[0m
+[31m#072 | ERROR  | 588ms | ₦200 | ETIMEDOUT[0m
+[31m#073 | ERROR  | 588ms | ₦300 | ETIMEDOUT[0m
+[31m#074 | ERROR  | 588ms | ₦400 | ETIMEDOUT[0m
+[31m#075 | ERROR  | 588ms | ₦500 | ETIMEDOUT[0m
+[31m#076 | ERROR  | 587ms | ₦600 | ETIMEDOUT[0m
+[31m#077 | ERROR  | 587ms | ₦700 | ETIMEDOUT[0m
+[31m#078 | ERROR  | 585ms | ₦800 | ETIMEDOUT[0m
+[31m#079 | ERROR  | 585ms | ₦900 | ETIMEDOUT[0m
+[31m#080 | ERROR  | 585ms | ₦1000 | ETIMEDOUT[0m
+[31m#081 | ERROR  | 584ms | ₦100 | ETIMEDOUT[0m
+[31m#082 | ERROR  | 584ms | ₦200 | ETIMEDOUT[0m
+[31m#083 | ERROR  | 583ms | ₦300 | ETIMEDOUT[0m
+[31m#084 | ERROR  | 583ms | ₦400 | ETIMEDOUT[0m
+[31m#085 | ERROR  | 583ms | ₦500 | ETIMEDOUT[0m
+[31m#086 | ERROR  | 581ms | ₦600 | ETIMEDOUT[0m
+[31m#087 | ERROR  | 581ms | ₦700 | ETIMEDOUT[0m
+[31m#088 | ERROR  | 580ms | ₦800 | ETIMEDOUT[0m
+[31m#089 | ERROR  | 580ms | ₦900 | ETIMEDOUT[0m
+[31m#090 | ERROR  | 580ms | ₦1000 | ETIMEDOUT[0m
+[31m#091 | ERROR  | 581ms | ₦100 | ETIMEDOUT[0m
+[31m#092 | ERROR  | 579ms | ₦200 | ETIMEDOUT[0m
+[31m#093 | ERROR  | 579ms | ₦300 | ETIMEDOUT[0m
+[31m#094 | ERROR  | 578ms | ₦400 | ETIMEDOUT[0m
+[31m#095 | ERROR  | 578ms | ₦500 | ETIMEDOUT[0m
+[31m#096 | ERROR  | 578ms | ₦600 | ETIMEDOUT[0m
+[31m#097 | ERROR  | 578ms | ₦700 | ETIMEDOUT[0m
+[31m#098 | ERROR  | 578ms | ₦800 | ETIMEDOUT[0m
+[31m#099 | ERROR  | 576ms | ₦900 | ETIMEDOUT[0m
+[31m#100 | ERROR  | 576ms | ₦1000 | ETIMEDOUT[0m
+[31m#001 | FAIL   | 1062ms | ₦100 | INSUFFICIENT_BALANCE[0m
+[31m#020 | FAIL   | 1286ms | ₦1000 | INSUFFICIENT_BALANCE[0m
+[31m#033 | FAIL   | 1563ms | ₦300 | INSUFFICIENT_BALANCE[0m
+[31m#052 | FAIL   | 1820ms | ₦200 | INSUFFICIENT_BALANCE[0m
+[31m#031 | FAIL   | 2123ms | ₦100 | INSUFFICIENT_BALANCE[0m
+[31m#025 | FAIL   | 2396ms | ₦500 | INSUFFICIENT_BALANCE[0m
+[31m#003 | FAIL   | 2710ms | ₦300 | INSUFFICIENT_BALANCE[0m
+[31m#008 | FAIL   | 2980ms | ₦800 | INSUFFICIENT_BALANCE[0m
+[31m#006 | FAIL   | 3293ms | ₦600 | INSUFFICIENT_BALANCE[0m
+[31m#004 | FAIL   | 3562ms | ₦400 | INSUFFICIENT_BALANCE[0m
+[31m#011 | FAIL   | 3821ms | ₦100 | INSUFFICIENT_BALANCE[0m
+[31m#041 | FAIL   | 4060ms | ₦100 | INSUFFICIENT_BALANCE[0m
+[31m#058 | FAIL   | 4292ms | ₦800 | INSUFFICIENT_BALANCE[0m
+[31m#064 | FAIL   | 4544ms | ₦400 | INSUFFICIENT_BALANCE[0m
+[31m#054 | FAIL   | 4865ms | ₦400 | INSUFFICIENT_BALANCE[0m
+[31m#002 | FAIL   | 5205ms | ₦200 | INSUFFICIENT_BALANCE[0m
+[31m#005 | FAIL   | 5463ms | ₦500 | INSUFFICIENT_BALANCE[0m
+[31m#012 | FAIL   | 5705ms | ₦200 | INSUFFICIENT_BALANCE[0m
+[31m#007 | FAIL   | 5987ms | ₦700 | INSUFFICIENT_BALANCE[0m
+[31m#018 | FAIL   | 6643ms | ₦800 | INSUFFICIENT_BALANCE[0m
+[31m#024 | FAIL   | 6919ms | ₦400 | INSUFFICIENT_BALANCE[0m
+[31m#009 | FAIL   | 7231ms | ₦900 | INSUFFICIENT_BALANCE[0m
+[31m#015 | FAIL   | 7505ms | ₦500 | INSUFFICIENT_BALANCE[0m
+[31m#013 | FAIL   | 7774ms | ₦300 | INSUFFICIENT_BALANCE[0m
+[31m#023 | FAIL   | 8905ms | ₦300 | INSUFFICIENT_BALANCE[0m
+[31m#021 | FAIL   | 9182ms | ₦100 | INSUFFICIENT_BALANCE[0m
+[31m#034 | FAIL   | 9435ms | ₦400 | INSUFFICIENT_BALANCE[0m
+[31m#027 | FAIL   | 9715ms | ₦700 | INSUFFICIENT_BALANCE[0m
+[31m#010 | TIMEOUT| >10s | ₦1000[0m
+[31m#014 | TIMEOUT| >10s | ₦400[0m
+[31m#016 | TIMEOUT| >10s | ₦600[0m
+[31m#017 | TIMEOUT| >10s | ₦700[0m
+[31m#019 | TIMEOUT| >10s | ₦900[0m
+[31m#022 | TIMEOUT| >10s | ₦200[0m
+[31m#026 | TIMEOUT| >10s | ₦600[0m
+[31m#028 | TIMEOUT| >10s | ₦800[0m
+[31m#029 | TIMEOUT| >10s | ₦900[0m
+[31m#030 | TIMEOUT| >10s | ₦1000[0m
+[31m#032 | TIMEOUT| >10s | ₦200[0m
+[31m#036 | TIMEOUT| >10s | ₦600[0m
+[31m#035 | TIMEOUT| >10s | ₦500[0m
+[31m#039 | TIMEOUT| >10s | ₦900[0m
+[31m#038 | TIMEOUT| >10s | ₦800[0m
+[31m#037 | TIMEOUT| >10s | ₦700[0m
+[31m#043 | TIMEOUT| >10s | ₦300[0m
+[31m#042 | TIMEOUT| >10s | ₦200[0m
+[31m#045 | TIMEOUT| >10s | ₦500[0m
+[31m#044 | TIMEOUT| >10s | ₦400[0m
+[31m#046 | TIMEOUT| >10s | ₦600[0m
+[31m#049 | TIMEOUT| >10s | ₦900[0m
+[31m#051 | TIMEOUT| >10s | ₦100[0m
+[31m#040 | TIMEOUT| >10s | ₦1000[0m
+[31m#047 | TIMEOUT| >10s | ₦700[0m
+[31m#048 | TIMEOUT| >10s | ₦800[0m
+[31m#055 | TIMEOUT| >10s | ₦500[0m
+[31m#059 | TIMEOUT| >10s | ₦900[0m
+[31m#050 | TIMEOUT| >10s | ₦1000[0m
+[31m#053 | TIMEOUT| >10s | ₦300[0m
+[31m#057 | TIMEOUT| >10s | ₦700[0m
+[31m#063 | TIMEOUT| >10s | ₦300[0m
+[31m#056 | TIMEOUT| >10s | ₦600[0m
+[31m#060 | TIMEOUT| >10s | ₦1000[0m
+[31m#062 | TIMEOUT| >10s | ₦200[0m
+[31m#061 | TIMEOUT| >10s | ₦100[0m
+
+[36m-----------------------------------[0m
+[35m📊 STRESS REPORT[0m
+Total Time:  10.26 seconds
+Throughput:  9.75 requests/second
+Success:     [32m0[0m
+Failed:      [31m100[0m
+[36m-----------------------------------[0m
+[33mTop Error Types:[0m
+- ETIMEDOUT: 36
+- INSUFFICIENT_BALANCE: 28
+- TIMEOUT: 36

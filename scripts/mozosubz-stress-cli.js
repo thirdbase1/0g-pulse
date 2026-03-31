@@ -31,17 +31,59 @@ const COLORS = {
 };
 
 async function runMozoSubzStressCli() {
-  console.log(`${COLORS.magenta}🦁 MOZOSUBZ STRESS CLI 🦁${COLORS.reset}`);
+  console.log(`${COLORS.magenta}🦁 MOZOSUBZ STRESS CLI (SMART EDITION) 🦁${COLORS.reset}`);
   console.log(`${COLORS.cyan}-----------------------------------${COLORS.reset}`);
   console.log(`Target: ${BASE_URL} (Airtime Only)`);
   console.log(`Phone:  ${PHONE || 'MISSING'}`);
-  console.log(`Config: ${CONCURRENCY} lanes, ${TOTAL_REQUESTS} total requests`);
+  console.log(`Config: Initial ${CONCURRENCY} lanes, ${TOTAL_REQUESTS} total requests`);
   console.log(`${COLORS.cyan}-----------------------------------${COLORS.reset}`);
 
   if (!API_KEY || !PHONE) {
     console.error(`${COLORS.red}❌ ERROR: API_KEY and PHONE environment variables are required.${COLORS.reset}`);
     process.exit(1);
   }
+
+  // --- Step 1: Verify Balance ---
+  try {
+    const balanceUrl = new URL(`${BASE_URL}/balance/`);
+    const balanceData = `api=${API_KEY}`;
+    const balanceOptions = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'api': `Bearer ${API_KEY}`,
+        'Authorization': `Bearer ${API_KEY}` // Send both to be safe
+      }
+    };
+
+    const balanceRes = await new Promise((resolve) => {
+      const protocol = balanceUrl.protocol === 'https:' ? https : http;
+      const req = protocol.request(balanceUrl, balanceOptions, (res) => {
+        let body = '';
+        res.on('data', d => body += d);
+        res.on('end', () => resolve(body));
+      });
+      req.on('error', () => resolve(null));
+      req.write(balanceData);
+      req.end();
+    });
+
+    if (balanceRes) {
+      try {
+        const json = JSON.parse(balanceRes);
+        if (json.balance !== undefined) {
+          console.log(`${COLORS.green}✅ API Verified. Balance: ₦${json.balance}${COLORS.reset}`);
+        } else {
+          const errMsg = json.description || json.error || json.status || balanceRes;
+          console.log(`${COLORS.red}❌ Balance Check Failed: ${errMsg}${COLORS.reset}`);
+        }
+      } catch (e) {
+        console.log(`${COLORS.green}✅ API Verified. Raw Response: ${balanceRes}${COLORS.reset}`);
+      }
+    } else {
+      console.log(`${COLORS.red}⚠️ Warning: No response from balance endpoint.${COLORS.reset}`);
+    }
+  } catch (e) {}
 
   const orders = Array.from({ length: TOTAL_REQUESTS }, (_, i) => ({
     id: i + 1,
@@ -50,39 +92,7 @@ async function runMozoSubzStressCli() {
     amount: (100 + (i % 10) * 100).toString()
   }));
 
-  // Confirm API Key and Balance first
-  try {
-    const balanceUrl = new URL(`${BASE_URL}/balance/`);
-    const balanceData = `api=${API_KEY}`;
-    const balanceOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'api': `Bearer ${API_KEY}`
-      }
-    };
-
-    await new Promise((resolve) => {
-      const protocol = balanceUrl.protocol === 'https:' ? https : http;
-      const req = protocol.request(balanceUrl, balanceOptions, (res) => {
-        let body = '';
-        res.on('data', d => body += d);
-        res.on('end', () => {
-          console.log(`${COLORS.green}✅ API Connection Verified.${COLORS.reset}`);
-          console.log(`Current Balance: ${body}`);
-          resolve();
-        });
-      });
-      req.on('error', (e) => {
-        console.log(`${COLORS.red}⚠️ Warning: Could not verify balance: ${e.message}${COLORS.reset}`);
-        resolve();
-      });
-      req.write(balanceData);
-      req.end();
-    });
-  } catch (e) {}
-
-  console.log(`🚀 BRUTE-FORCING ${TOTAL_REQUESTS} CONCURRENT REQUESTS...`);
+  console.log(`🚀 BRUTE-FORCING ${TOTAL_REQUESTS} REQUESTS (Adaptive Concurrency enabled)...`);
   console.log(`\n${COLORS.yellow}LIVE TICKER:${COLORS.reset}`);
   console.log('ID | STATUS | LATENCY | AMOUNT | ERROR');
   console.log('---|--------|---------|--------|-------');
@@ -94,9 +104,18 @@ async function runMozoSubzStressCli() {
 
   const activeRequests = [];
   const queue = [...orders];
+  let currentLanes = CONCURRENCY;
 
   const performRequest = (order) => {
     return new Promise((resolve) => {
+      let resolved = false;
+      const safeResolve = () => {
+        if (!resolved) {
+          resolved = true;
+          resolve();
+        }
+      };
+
       const reqStart = Date.now();
       const apiUrl = new URL(`${BASE_URL}/pay/`);
       const postData = `serviceID=${order.serviceID}&api=${API_KEY}&amount=${order.amount}&phone=${order.phone}&requestID=STRESS-${Date.now()}-${order.id}`;
@@ -106,8 +125,10 @@ async function runMozoSubzStressCli() {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
           'Content-Length': Buffer.byteLength(postData),
-          'api': `Bearer ${API_KEY}`
-        }
+          'api': `Bearer ${API_KEY}`,
+          'Authorization': `Bearer ${API_KEY}`
+        },
+        timeout: 10000 // 10s timeout
       };
 
       const protocol = apiUrl.protocol === 'https:' ? https : http;
@@ -115,42 +136,53 @@ async function runMozoSubzStressCli() {
         let responseBody = '';
         res.on('data', chunk => responseBody += chunk);
         res.on('end', () => {
-          if (res.statusCode !== 200) {
-            const latency = Date.now() - reqStart;
-            failCount++;
-            const errorMsg = `HTTP_${res.statusCode}`;
-            errorTypes[errorMsg] = (errorTypes[errorMsg] || 0) + 1;
-            console.log(`${COLORS.red}#${order.id.toString().padStart(3, '0')} | FAIL   | ${latency}ms | ₦${order.amount} | ${errorMsg}${COLORS.reset}`);
-            return resolve();
-          }
+          if (resolved) return;
           const latency = Date.now() - reqStart;
           let result;
           try {
             result = JSON.parse(responseBody);
           } catch (e) {
-            result = { status: 'ERROR', error: 'INVALID_JSON' };
+            result = { status: 'ERROR', error: 'MALFORMED_JSON' };
           }
 
-          if (result.status === 'TRANSACTION_SUCCESSFUL') {
-            successCount++;
-            console.log(`${COLORS.green}#${order.id.toString().padStart(3, '0')} | OK     | ${latency}ms | ₦${order.amount}${COLORS.reset}`);
-          } else {
+          if (res.statusCode !== 200 || (result.status && result.status !== 'TRANSACTION_SUCCESSFUL')) {
             failCount++;
-            const errorMsg = result.error || result.status || 'FAILED';
+            const errorMsg = result.description || result.error || result.api_response || result.status || `HTTP_${res.statusCode}`;
             errorTypes[errorMsg] = (errorTypes[errorMsg] || 0) + 1;
             console.log(`${COLORS.red}#${order.id.toString().padStart(3, '0')} | FAIL   | ${latency}ms | ₦${order.amount} | ${errorMsg}${COLORS.reset}`);
+
+            // Smart: Decrease lanes on failure
+            if (currentLanes > 5) currentLanes--;
+          } else {
+            successCount++;
+            console.log(`${COLORS.green}#${order.id.toString().padStart(3, '0')} | OK     | ${latency}ms | ₦${order.amount}${COLORS.reset}`);
+
+            // Smart: Increase lanes on success
+            if (currentLanes < 500) currentLanes++;
           }
-          resolve();
+          safeResolve();
         });
       });
 
+      req.on('timeout', () => {
+        if (resolved) return;
+        req.destroy();
+        failCount++;
+        errorTypes['TIMEOUT'] = (errorTypes['TIMEOUT'] || 0) + 1;
+        console.log(`${COLORS.red}#${order.id.toString().padStart(3, '0')} | TIMEOUT| >10s | ₦${order.amount}${COLORS.reset}`);
+        currentLanes = Math.max(5, Math.floor(currentLanes / 2)); // Aggressive scale down
+        safeResolve();
+      });
+
       req.on('error', (err) => {
+        if (resolved) return;
         const latency = Date.now() - reqStart;
         failCount++;
-        const errorMsg = err.code || err.message || 'SOCKET_ERROR';
+        const errorMsg = err.code || 'SOCKET_ERROR';
         errorTypes[errorMsg] = (errorTypes[errorMsg] || 0) + 1;
         console.log(`${COLORS.red}#${order.id.toString().padStart(3, '0')} | ERROR  | ${latency}ms | ₦${order.amount} | ${errorMsg}${COLORS.reset}`);
-        resolve();
+        currentLanes = Math.max(5, Math.floor(currentLanes * 0.8));
+        safeResolve();
       });
 
       req.write(postData);
@@ -159,7 +191,7 @@ async function runMozoSubzStressCli() {
   };
 
   while (queue.length > 0 || activeRequests.length > 0) {
-    while (queue.length > 0 && activeRequests.length < CONCURRENCY) {
+    while (queue.length > 0 && activeRequests.length < currentLanes) {
       const order = queue.shift();
       const promise = performRequest(order).then(() => {
         activeRequests.splice(activeRequests.indexOf(promise), 1);
