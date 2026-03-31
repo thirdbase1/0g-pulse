@@ -34,7 +34,7 @@ This guide will show you how to set up and run the **Beast Terminal** on your mo
 
 ## 🔥 Step 3: Run the Stress Test
 
-To run the terminal against the real GSUBZ API with a live performance ticker, use the following command:
+To run the standalone **MozoSubz Stress CLI** against the real GSUBZ API with a live performance ticker, use the following command:
 
 ```bash
 export API_KEY="YOUR_GSUBZ_API_KEY"
@@ -42,7 +42,7 @@ export PHONE="08140558898"
 export CONCURRENCY=20
 export TOTAL_REQUESTS=200
 
-npx ts-node --esm scripts/beast-terminal.ts
+node scripts/mozosubz-stress-cli.js
 ```
 
 ### **Parameters Explained:**
