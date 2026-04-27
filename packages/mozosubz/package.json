@@ -1,6 +1,6 @@
 {
   "name": "mozosubz",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "The 'Beast' VTU Integration for GSUBZ.com - Features: Sandbox Mode, Ultra-Speed Bulk Engine, Auto-Security, Smart Caching, and Automatic Margins.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
