@@ -1,15 +1,15 @@
 {
   "name": "mozosubz",
-  "version": "2.0.0",
-  "description": "The 'Beast' VTU Integration for GSUBZ.com - Features: Sandbox Mode, Ultra-Speed Bulk Engine, Auto-Security, Smart Caching, and Automatic Margins.",
+  "version": "3.0.0",
+  "description": "The 'Beast' VTU Integration - Features: Sandbox Mode, Ultra-Speed Bulk Engine, Auto-Security, Smart Caching, and Automatic Margins.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "deprecated": "v1.0.0 is deprecated. Please upgrade to v2.0.0 or higher.",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "gsubz",
     "vtu",
     "data",
     "airtime",
