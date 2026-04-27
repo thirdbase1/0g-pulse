@@ -1,7 +1,7 @@
 {
   "name": "mozosubz",
   "version": "3.0.0",
-  "description": "The 'Beast' VTU Integration - Features: Sandbox Mode, Ultra-Speed Bulk Engine, Auto-Security, Smart Caching, and Automatic Margins.",
+  "description": "A lightweight and efficient data service SDK with advanced features including Sandbox Mode, High-Performance Processing, Auto-Security, Smart Caching, and Dynamic Pricing Management.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "deprecated": "v1.0.0 is deprecated. Please upgrade to v2.0.0 or higher.",
@@ -10,15 +10,14 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "vtu",
-    "data",
-    "airtime",
-    "nigeria",
+    "data-service",
     "api",
     "sdk",
-    "bulk",
-    "nextjs",
-    "termux"
+    "high-performance",
+    "caching",
+    "security",
+    "nodejs",
+    "typescript"
   ],
   "author": "Jules",
   "license": "MIT",
