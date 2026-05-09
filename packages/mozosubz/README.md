@@ -1,22 +1,21 @@
-# MozoSubz SDK 🦁
+# MozoSubz Identity Verification Engine 🏢
 
-**The "Beast" VTU Integration for GSUBZ.com**
+**Enterprise-Grade KYC & Compliance Platform**
 
-MozoSubz is a high-performance, developer-first SDK for integrating Nigerian mobile data, airtime, and bill payments into your applications. It is built to handle ultra-speed bulk operations, automated security checks, and comes with a built-in "Ghost" sandbox for testing without spending real money.
+MozoSubz is a comprehensive identity verification and compliance platform for fintech, banking, and regulated businesses. It provides real-time KYC verification, biometric liveness detection, document OCR, and global compliance screening.
 
 ---
 
-## 🚀 "Beast" Features
+## 🚀 Core Capabilities
 
-- **⚡ Ultra-Speed Bulk Engine**: Process 200+ data or airtime orders in under 1 minute with parallel concurrency control.
-- **👻 Ghost Sandbox**: Test every scenario (Success, Low Balance, Gateway Error) without an API key.
-- **🛡️ Auto-Security Shield**:
-    - **Price Auditing**: Prevents tampering by cross-checking wholesale prices before transactions.
-    - **Credential Redaction**: Automatically scrubs sensitive API keys and phone numbers from logs.
-    - **Nigerian Phone Validation**: Built-in validation for MTN, Airtel, Glo, and 9Mobile numbers.
-- **📈 Smart Margin Engine**: Set your profit margin (flat or percentage) and the SDK handles the math for your retail prices.
-- **🔄 Auto-Retry Engine**: Intelligent exponential backoff for handling temporary gateway errors (5xx).
-- **📉 Low Balance Alerts**: Get notified automatically when your wallet balance drops below your threshold.
+- **🔐 Real-time KYC Verification**: Multi-level verification (L0-L4) with customizable compliance requirements
+- **👤 Biometric Matching**: Liveness detection, face matching, and anti-spoofing checks
+- **📄 Document OCR**: Intelligent document scanning with tampering detection
+- **🚫 Sanctions Screening**: PEP lists, global sanctions databases, and AML flag detection
+- **📊 Risk Scoring**: Automatic risk assessment (low/medium/high/critical)
+- **📋 Compliance Reports**: Audit trails and regulatory reporting
+- **🔗 Webhook Events**: Real-time event streaming for compliance monitoring
+- **🌍 Enterprise Security**: HMAC-signed webhooks, API key management, encrypted data
 
 ---
 
@@ -28,69 +27,162 @@ npm install mozosubz
 
 ---
 
-## 🛠️ Getting Started (Sandbox Mode)
+## 🛠️ Quick Start
 
-No API key? No problem. Test the SDK immediately using the Sandbox mode.
+### Initiate a Verification Flow
 
 ```typescript
 import { MozoSubz } from 'mozosubz';
 
-const mozo = new MozoSubz({
-  apiKey: 'YOUR_API_KEY', // Not needed for sandbox
-  sandbox: true,          // Enable sandbox
-  debug: true,            // See the Beast in action
-  margin: { type: 'flat', value: 50 } // Add 50 Naira profit to every plan
+const identity = new MozoSubz({
+  apiKey: process.env.MOZOSUBZ_API_KEY,
+  environment: 'production',
+  complianceLevel: 'enhanced',
+  enableBiometrics: true
 });
 
-// 1. Fetch plans with your retail price already calculated
-const plans = await mozo.getPlans('mtn_sme');
-console.log(`Retail Price: ₦${plans[0].retailPrice}`);
+// Start KYC for a user at Level 2
+const verification = await identity.initiateVerification('user_123', 'L2');
+console.log(`Verification ID: ${verification.verificationId}`);
+```
 
-// 2. Buy Airtime
-const response = await mozo.buyAirtime('08140558898', 100, 'mtn');
-if (response.status === 'TRANSACTION_SUCCESSFUL') {
-  console.log('✅ Success! TransID:', response.content.transactionID);
+### Submit Documents for Verification
+
+```typescript
+const docResult = await identity.submitDocument(
+  verification.verificationId,
+  'passport',
+  imageBase64String
+);
+
+console.log(`Document Confidence: ${docResult.ocrConfidence}%`);
+console.log(`Tampered: ${docResult.tamperedDetected}`);
+```
+
+### Perform Biometric Checks
+
+```typescript
+const bioResult = await identity.performBiometricCheck(
+  verification.verificationId,
+  videoBase64String,
+  referencePhotoBase64String
+);
+
+if (bioResult.livenessCheck === 'passed' && bioResult.similarityScore > 95) {
+  console.log('✅ Liveness and face match confirmed');
 }
 ```
 
----
-
-## 🌪️ Bulk Operations (Beast Mode)
-
-Send data or airtime to hundreds of people at once.
+### Run Compliance Checks
 
 ```typescript
-const bulkOrders = [
-  { phone: '08140558801', serviceID: 'mtn_sme', plan: '179' },
-  { phone: '08140558802', serviceID: 'glo_data', plan: '500' },
-  // ... up to 1000s of orders
-];
+const compliance = await identity.runComplianceCheck(
+  'user_123',
+  'John Doe',
+  'NG' // ISO country code
+);
 
-const results = await mozo.bulkBuy(bulkOrders);
-console.log(`Done! ${results.filter(r => r.success).length} orders succeeded.`);
+if (compliance.sanctions.pep || compliance.sanctions.sanctions_list) {
+  console.log('⚠️ User flagged for PEP/Sanctions screening');
+}
+```
+
+### Finalize and Issue Compliance Certificate
+
+```typescript
+const final = await identity.finalizeVerification(
+  verification.verificationId,
+  'approved'
+);
+
+console.log(`Verification Status: ${final.status}`);
+console.log(`Risk Level: ${final.riskLevel}`);
 ```
 
 ---
 
-## 📟 Testing on Termux
+## 📊 Verification Levels
 
-The SDK is fully compatible with Node.js on Termux.
-
-1. Install Node.js: `pkg install nodejs`
-2. Create your project: `npm init -y`
-3. Install the Beast: `npm install mozosubz`
-4. Run your script: `node your-script.js`
+| Level | Description | Use Case |
+|-------|-------------|----------|
+| **L0** | Email verification only | Low-risk operations |
+| **L1** | Phone + Email | Basic account access |
+| **L2** | ID document scan | Standard fintech |
+| **L3** | L2 + Biometric liveness | High-risk transactions |
+| **L4** | L3 + Compliance screening | Regulated industries |
 
 ---
 
-## 🛡️ Security Best Practices
+## 🔐 Security Best Practices
 
-1. **Never expose your API Key** on the frontend. This SDK is intended for Server-Side use (Node.js, Next.js, etc.).
-2. Use **Environment Variables** for your API key.
-3. Enable **Debug Mode** in development to trace request/response cycles.
+1. **Store API keys in environment variables** - Never expose in code
+2. **Use webhook verification** for event authenticity
+3. **Enable HTTPS only** for all API communication
+4. **Implement rate limiting** on your endpoints
+5. **Audit compliance reports regularly** for regulatory compliance
+6. **Redact sensitive data** in logs (PII, documents, biometrics)
+
+---
+
+## 📋 Webhook Events
+
+MozoSubz sends real-time events for compliance monitoring:
+
+```json
+{
+  "event": "verification.completed",
+  "verificationId": "ver_abc123",
+  "status": "verified",
+  "riskLevel": "low",
+  "timestamp": "2024-01-15T10:30:00Z"
+}
+```
+
+Verify webhook signatures:
+
+```typescript
+const isValid = identity.verifyWebhookSignature(payload, signature);
+```
+
+---
+
+## 🌍 Supported Documents
+
+- 🛂 Passport
+- 🆔 National ID
+- 🚗 Driver's License
+- ✈️ Visa
+- 📄 Utility Bill (Address Proof)
+- 🏦 Bank Statement
+
+---
+
+## 📈 Risk Scoring
+
+Automatic risk assessment based on:
+
+- Document validity and tampering detection
+- Biometric liveness and anti-spoofing scores
+- Compliance screening results (PEP, sanctions)
+- Geographic risk factors
+- Behavioral patterns
+
+**Risk Levels:**
+- 🟢 **Low**: 0-25%
+- 🟡 **Medium**: 26-50%
+- 🔴 **High**: 51-75%
+- ⚫ **Critical**: 76-100%
+
+---
+
+## 📞 Support
+
+- 📧 Email: support@mozosubz.io
+- 🐛 Issues: [GitHub Issues](https://github.com/thirdbase1/0g-pulse)
+- 📚 Docs: https://docs.mozosubz.io
 
 ---
 
 ## 📜 License
 
-MIT © Jules
+MIT © Jules - Enterprise Identity Verification

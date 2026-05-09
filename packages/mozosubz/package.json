@@ -1,23 +1,27 @@
 {
   "name": "mozosubz",
-  "version": "3.0.0",
-  "description": "A lightweight and efficient data service SDK with advanced features including Sandbox Mode, High-Performance Processing, Auto-Security, Smart Caching, and Dynamic Pricing Management.",
+  "version": "5.0.0",
+  "description": "Enterprise-grade KYC and identity verification platform. Features real-time verification, biometric liveness checks, document OCR, global sanctions screening, and compliance reporting.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "deprecated": "v1.0.0 is deprecated. Please upgrade to v2.0.0 or higher.",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "data-service",
-    "api",
+    "kyc",
+    "identity-verification",
+    "compliance",
+    "aml",
+    "fintech",
+    "biometric",
+    "document-ocr",
+    "sanctions-screening",
+    "enterprise",
+    "banking",
     "sdk",
-    "high-performance",
-    "caching",
-    "security",
-    "nodejs",
-    "typescript"
+    "typescript",
+    "nodejs"
   ],
   "author": "Jules",
   "license": "MIT",
